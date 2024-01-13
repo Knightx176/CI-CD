@@ -15,7 +15,7 @@ jobs:
       - name: Build Docker image
         run: |
           docker build -t knightx176/flaskapp .
-          docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_PASSWORD }}
+          docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p${{ secrets.DOCKERHUB_PASSWORD }}
           docker push knightx176/flaskapp
 
       
