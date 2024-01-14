@@ -26,11 +26,12 @@ jobs:
       - name: copy file via ssh password
         uses: appleboy/scp-action@v0.1.7
         with:
+          debug: true
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USER }}
           key: ${{ secrets.KEY }}
           port: ${{ secrets.PORT }}
-          source: "deploy.sh"
+          source: deploy.sh
           target: ~
 
       - name: deploy application
