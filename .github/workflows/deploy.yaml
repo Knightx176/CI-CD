@@ -4,7 +4,7 @@ on:
     branches:
       - main
 jobs:
-  build:
+  build: 
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
@@ -23,7 +23,7 @@ jobs:
 
           tags: ${{ secrets.DOCKERHUB_USERNAME}}/flaskapp:dev-${{ github.run_number }}
 
-     -  name: copy file via ssh password
+      - name: copy file via ssh password
         uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ secrets.HOST }}
