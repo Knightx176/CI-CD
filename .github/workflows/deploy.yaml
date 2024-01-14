@@ -1,0 +1,49 @@
+name: TSR CI/CD PIPELINE
+on:
+  push:
+    branches:
+      - main
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+
+      - name: BUILD and PUSH
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          push: true
+
+          tags: ${{ secrets.DOCKERHUB_USERNAME}}/flaskapp:dev-${{ github.run_number }}
+
+     -  name: copy file via ssh password
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USER }}
+          key: ${{ secrets.KEY }}
+          port: ${{ secrets.PORT }}
+          source: "deploy.sh"
+          target: ~
+
+      - name: deploy application
+        uses: appleboy/ssh-action@v1.0.3
+        env:
+            USERNAME  : ${{ secrets.DOCKERHUB_USERNAME}}
+            TAG: dev-${{ github.run_number }}
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USER }}
+          key: ${{ secrets.KEY }}
+          port: ${{ secrets.PORT }}
+          envs: USER,TAG
+          script: |
+            cd ~
+            ./deploy.sh
