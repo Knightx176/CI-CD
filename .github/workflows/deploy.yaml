@@ -44,7 +44,7 @@ jobs:
           username: ${{ secrets.USER }}
           key: ${{ secrets.KEY }}
           port: ${{ secrets.PORT }}
-          envs: USER,TAG
+          envs: USERNAME,TAG
           script: |
             cd ~
             chmod +x deploy.sh && ./deploy.sh
