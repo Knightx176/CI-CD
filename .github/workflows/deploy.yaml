@@ -47,4 +47,4 @@ jobs:
           envs: USER,TAG
           script: |
             cd ~
-            ./deploy.sh
+            chmod +x deploy.sh && ./deploy.sh
