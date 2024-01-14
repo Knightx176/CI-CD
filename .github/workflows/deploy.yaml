@@ -31,8 +31,8 @@ jobs:
           username: ${{ secrets.USER }}
           key: ${{ secrets.KEY }}
           port: ${{ secrets.PORT }}
-          source: deploy.sh
-          target: ~
+          source: "deploy.sh"
+          target: /home/ubuntu
 
       - name: deploy application
         uses: appleboy/ssh-action@master
